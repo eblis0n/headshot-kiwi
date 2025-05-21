@@ -14,7 +14,7 @@ import {
   onAuthStateChanged,
   User
 } from 'firebase/auth'
-import { auth } from '@/lib/utils/firebase'
+import { auth, googleProvider } from '@/lib/utils/firebase'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/lib/store/useStore'
 
@@ -60,13 +60,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider()
-    provider.setCustomParameters({
-      prompt: 'select_account',
-      authType: 'signInWithRedirect'
-    })
     try {
-      await signInWithPopup(auth, provider)
+      await signInWithPopup(auth, googleProvider)
     } catch (error) {
       console.error('Google 登录失败:', error)
       throw error
