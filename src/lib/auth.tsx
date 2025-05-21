@@ -18,6 +18,15 @@ import { auth, googleProvider } from '@/lib/utils/firebase'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/lib/store/useStore'
 
+// 扩展全局类型定义
+declare global {
+  interface Window {
+    wss?: {
+      clients: Set<WebSocket>
+    }
+  }
+}
+
 interface AuthContextType {
   user: User | null
   signInWithGoogle: () => Promise<void>
@@ -84,10 +93,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       
       // 4. 清除 WebSocket 连接（如果存在）
-      if (global.wss) {
-        const clients = Array.from(global.wss.clients)
+      if (typeof window !== 'undefined' && window.wss) {
+        const clients = Array.from(window.wss.clients)
         clients.forEach(client => {
-          if (client.readyState === client.OPEN) {
+          if (client.readyState === WebSocket.OPEN) {
             client.close()
           }
         })
