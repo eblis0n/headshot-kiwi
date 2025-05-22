@@ -31,10 +31,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "./dist/.next/types/**/*.ts",
     ".next/types/**/*.ts",
-    "next-env.d.ts",
-    "./headshot-kiwi/.next/types/**/*.ts"
+    "next-env.d.ts"
   ],
   "exclude": [
     "node_modules"
