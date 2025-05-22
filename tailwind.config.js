@@ -1,18 +1,17 @@
-/*
- * @version: 1.0.0
- * @Author: Eblis
- * @Date: 2025-05-21 18:29:16
- * @LastEditTime: 2025-05-21 18:30:42
- */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './src/lib/firebase/**/*.ts',
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
+  ],
+  corePlugins: {
+    preflight: false, // 与 Firebase UI 兼容
+  },
   theme: {
     extend: {
-      colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-      },
+      // 可以在这里添加自定义主题配置
     },
   },
   plugins: [],

@@ -14,18 +14,9 @@ import {
   onAuthStateChanged,
   User
 } from 'firebase/auth'
-import { auth, googleProvider } from '@/lib/utils/firebase'
+import { auth } from '@/lib/utils/firebase'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/lib/store/useStore'
-
-// 扩展全局类型定义
-declare global {
-  interface Window {
-    wss?: {
-      clients: Set<WebSocket>
-    }
-  }
-}
 
 interface AuthContextType {
   user: User | null
@@ -69,8 +60,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+    provider.setCustomParameters({
+      prompt: 'select_account',
+      authType: 'signInWithRedirect'
+    })
     try {
-      await signInWithPopup(auth, googleProvider)
+      await signInWithPopup(auth, provider)
     } catch (error) {
       console.error('Google 登录失败:', error)
       throw error
@@ -93,10 +89,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       
       // 4. 清除 WebSocket 连接（如果存在）
-      if (typeof window !== 'undefined' && window.wss) {
-        const clients = Array.from(window.wss.clients)
+      if (global.wss) {
+        const clients = Array.from(global.wss.clients)
         clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {
+          if (client.readyState === client.OPEN) {
             client.close()
           }
         })

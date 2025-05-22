@@ -2,12 +2,12 @@
  * @version: 1.0.0
  * @Author: Eblis
  * @Date: 2025-05-21 15:00:00
- * @LastEditTime: 2025-05-21 16:03:17
+ * @LastEditTime: 2025-05-22 15:07:58
  */
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import '@/styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

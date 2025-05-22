@@ -1,11 +1,5 @@
-/*
- * @version: 1.0.0
- * @Author: Eblis
- * @Date: 2025-05-21 11:10:46
- * @LastEditTime: 2025-05-21 18:42:36
- */
 "use client";
-import { auth, googleProvider } from '@/lib/utils/firebase';
+import { auth, provider } from '@/lib/utils/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { useState } from 'react';
 
@@ -15,9 +9,8 @@ export default function GoogleLoginButton() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, provider);
     } catch (error) {
-      console.error('登录失败:', error);
       alert('登录失败');
     } finally {
       setLoading(false);
